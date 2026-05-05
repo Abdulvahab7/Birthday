@@ -3,7 +3,10 @@
 <head>
   <title>For You 💖</title>
 
-  <!-- Confetti Library -->
+  <!-- Mobile Responsive -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Confetti -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <style>
@@ -11,40 +14,57 @@
       text-align: center;
       font-family: Arial;
       background: linear-gradient(to right, #ff9a9e, #fad0c4);
+      margin: 0;
+      padding: 10px;
       overflow: hidden;
     }
 
     h1 {
-      margin-top: 20px;
+      font-size: 22px;
     }
 
+    /* Slideshow */
     #slideshow {
-      width: 250px;
-      height: 250px;
+      position: relative;
+      width: 80vw;
+      max-width: 300px;
+      height: 80vw;
+      max-height: 300px;
       margin: auto;
       border-radius: 15px;
       overflow: hidden;
     }
 
-    #slideshow img {
+    .slide {
+      position: absolute;
       width: 100%;
       height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 1.5s ease-in-out, transform 3s ease;
+      transform: scale(1);
     }
 
+    .slide.active {
+      opacity: 1;
+      transform: scale(1.08);
+    }
+
+    /* Question */
     .question {
-      font-size: 22px;
-      margin: 20px;
-      min-height: 40px;
+      font-size: 20px;
+      margin: 20px 10px;
+      min-height: 50px;
     }
 
+    /* Buttons */
     button {
-      padding: 10px 20px;
+      padding: 14px 24px;
       font-size: 18px;
       margin: 10px;
       border: none;
-      border-radius: 10px;
+      border-radius: 12px;
       cursor: pointer;
-      position: relative;
     }
 
     #yesBtn {
@@ -55,7 +75,7 @@
     #noBtn {
       background-color: #f44336;
       color: white;
-      position: absolute;
+      position: fixed;
     }
   </style>
 </head>
@@ -64,21 +84,27 @@
 
 <h1>🎂 A Little Game For You 💖</h1>
 
+<!-- Slideshow -->
 <div id="slideshow">
-  <img id="slide" src="img1.jpg">
+  <img class="slide active" src="img1.png">
+  <img class="slide" src="img2.png">
+  <img class="slide" src="img3.jpeg">
 </div>
 
+<!-- Question -->
 <div class="question" id="question"></div>
 
+<!-- Start -->
 <button onclick="startGame()">Start 😄</button>
 
+<!-- Buttons -->
 <div id="buttons" style="display:none;">
   <button id="yesBtn" onclick="yesClick()">Yes 💖</button>
-  <button id="noBtn" onmouseover="moveNo()" onclick="moveNo()">No 😜</button>
+  <button id="noBtn" ontouchstart="moveNo()" onclick="moveNo()">No 😜</button>
 </div>
 
-<!-- Background Music -->
-<audio id="music" autoplay loop>
+<!-- Music -->
+<audio id="music" loop>
   <source src="music.mp3" type="audio/mpeg">
 </audio>
 
@@ -97,19 +123,11 @@
   let yesSize = 18;
   let noSize = 18;
 
-  let images = ["img1.png", "img2.png", "img3.jpeg"];
-  let imgIndex = 0;
-
-  // Slideshow
-  setInterval(() => {
-    imgIndex = (imgIndex + 1) % images.length;
-    document.getElementById("slide").src = images[imgIndex];
-  }, 2000);
-
+  // Typing Effect
   function typeText(text, i = 0) {
     if (i < text.length) {
       document.getElementById("question").innerHTML += text.charAt(i);
-      setTimeout(() => typeText(text, i + 1), 40);
+      setTimeout(() => typeText(text, i + 1), 35);
     }
   }
 
@@ -127,6 +145,7 @@
     showQuestion();
   }
 
+  // YES click
   function yesClick() {
     index++;
 
@@ -140,19 +159,23 @@
     }
   }
 
+  // NO button runs + shrinks
   function moveNo() {
     let btn = document.getElementById("noBtn");
 
-    let x = Math.random() * window.innerWidth * 0.8;
-    let y = Math.random() * window.innerHeight * 0.8;
+    let maxX = window.innerWidth - btn.offsetWidth;
+    let maxY = window.innerHeight - btn.offsetHeight;
+
+    let x = Math.random() * maxX;
+    let y = Math.random() * maxY;
 
     btn.style.left = x + "px";
     btn.style.top = y + "px";
 
-    yesSize += 10;
-    noSize -= 3;
+    yesSize += 8;
+    noSize -= 2;
 
-    if (noSize < 5) noSize = 5;
+    if (noSize < 8) noSize = 8;
 
     updateSize();
   }
@@ -162,6 +185,17 @@
     document.getElementById("noBtn").style.fontSize = noSize + "px";
   }
 
+  // Slideshow
+  let slides = document.querySelectorAll(".slide");
+  let current = 0;
+
+  setInterval(() => {
+    slides[current].classList.remove("active");
+    current = (current + 1) % slides.length;
+    slides[current].classList.add("active");
+  }, 2500);
+
+  // Celebration
   function celebrate() {
     document.body.innerHTML = `
       <h1>💖 I KNEW IT 😌💖</h1>
@@ -171,13 +205,12 @@
       </p>
     `;
 
-    // Confetti
     let duration = 3 * 1000;
     let end = Date.now() + duration;
 
     (function frame() {
       confetti({
-        particleCount: 5,
+        particleCount: 6,
         spread: 70,
         origin: { y: 0.6 }
       });
