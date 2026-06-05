@@ -1,16 +1,26 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <title>For You 🐇💖</title>
+
+  <title>For You 🌙💖</title>
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- Confetti -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
     body {
-      margin: 0;
-      overflow: hidden;
+
+      overflow-x: hidden;
       text-align: center;
       color: white;
       font-family: "Segoe UI Emoji","Apple Color Emoji", Arial, sans-serif;
@@ -18,6 +28,9 @@
       background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #ff758c, #ff7eb3);
       background-size: 400% 400%;
       animation: gradientMove 10s ease infinite;
+
+      min-height:100vh;
+      position:relative;
     }
 
     @keyframes gradientMove {
@@ -26,19 +39,58 @@
       100% { background-position: 0% 50%; }
     }
 
+    /* BACKGROUND PHOTOS */
+
+    .bg-gallery{
+      position:fixed;
+      width:100%;
+      height:100%;
+      top:0;
+      left:0;
+      z-index:-3;
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+      padding:10px;
+      opacity:0.25;
+    }
+
+    .bg-gallery img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      border-radius:15px;
+      animation:zoom 8s infinite alternate;
+    }
+
+    @keyframes zoom{
+      from{
+        transform:scale(1);
+      }
+      to{
+        transform:scale(1.08);
+      }
+    }
+
     h1 {
       margin-top: 30px;
       font-size: 26px;
+      padding:10px;
     }
 
-    /* 🐇 Name Animation */
+    /* NAME ANIMATION */
+
     .name {
+
       font-size: 34px;
       font-weight: bold;
+
       background: linear-gradient(45deg, #fff, #ff4081, #00e5ff, #fff);
       background-size: 300% auto;
+
       -webkit-background-clip: text;
       color: transparent;
+
       animation: shine 3s linear infinite, pulse 1.5s infinite alternate;
     }
 
@@ -48,16 +100,19 @@
 
     @keyframes pulse {
       from { transform: scale(1); }
-      to { transform: scale(1.2); }
+      to { transform: scale(1.15); }
     }
 
     .question {
       font-size: 20px;
       margin: 30px 15px;
       min-height: 60px;
+      padding:0 10px;
+      text-shadow:0 0 10px rgba(0,0,0,0.5);
     }
 
     button {
+
       padding: 14px 26px;
       font-size: 18px;
       border: none;
@@ -65,6 +120,7 @@
       margin: 10px;
       cursor: pointer;
       transition: transform 0.2s;
+
     }
 
     button:active {
@@ -72,107 +128,191 @@
     }
 
     #yesBtn {
+
       background: #4CAF50;
       color: white;
       box-shadow: 0 0 20px #4CAF50;
+
     }
 
     #noBtn {
+
       background: #f44336;
       color: white;
       position: fixed;
+
     }
 
-    /* Floating hearts */
+    /* FLOATING HEARTS */
+
     .heart {
+
       position: absolute;
-      color: rgba(255,255,255,0.6);
+      color: rgba(255,255,255,0.7);
       animation: floatUp 5s linear infinite;
+
     }
 
     @keyframes floatUp {
+
       from {
         transform: translateY(100vh);
         opacity: 1;
       }
+
       to {
         transform: translateY(-10vh);
         opacity: 0;
       }
+
     }
+
+    /* FOOTER */
+
+    .footer{
+      position:fixed;
+      bottom:10px;
+      right:15px;
+      font-size:14px;
+      color:white;
+      background:rgba(0,0,0,0.25);
+      padding:8px 14px;
+      border-radius:20px;
+      backdrop-filter:blur(6px);
+    }
+
   </style>
+
 </head>
 
 <body>
 
-<h1>🎂 Happy Birthday <span class="name">Muhshina 🩷🩵</span> 💖</h1>
+<!-- BACKGROUND PHOTOS -->
+
+<div class="bg-gallery">
+
+  <img src="img (1).png">
+  <img src="img (2).png">
+  <img src="img (1).jpeg">
+  <img src="img (2).jpeg">
+  <img src="img (3).jpeg">
+  <img src="img (1).png">
+
+</div>
+
+<h1>
+🎂 Happy Birthday
+<span class="name">Alfi 🩷🩵</span>
+💖
+</h1>
 
 <div class="question" id="question"></div>
 
 <button onclick="startGame()">Start 😄</button>
 
 <div id="buttons" style="display:none;">
-  <button id="yesBtn" onclick="yesClick()">Yes 💖</button>
-  <button id="noBtn" ontouchstart="moveNo()" onclick="moveNo()">No 😜</button>
+
+  <button id="yesBtn" onclick="yesClick()">
+    Yes 💖
+  </button>
+
+  <button id="noBtn" ontouchstart="moveNo()" onclick="moveNo()">
+    No 😜
+  </button>
+
 </div>
 
-<audio id="music" loop>
-  <source src="music.mp3" type="audio/mpeg">
-</audio>
+<div class="footer">
+  Happy birthday sister from ABD ❤️
+</div>
 
 <script>
+
   let questions = [
-    "Hey 🐇… ready for something special? 😄",
-    "🐇… We have the cutest memories 😊",
-    "Do you keep thinking about me 🐇 💭",
-    "Do you miss me too 🐇? 🥺",
-    "Is I am special to you 🐇 😌",
+
+    "Hey 🌙… ready for something special? 😄",
+
+    "🌙… We have the cutest memories 😊",
+
+    "Do you keep thinking about me 🌙 💭",
+
+    "Do you miss me too 🌙? 🥺",
+
+    "Am I special to you 🌙 😌",
+
     "Okay last one… ❤️",
+
     "Do you like me? 💖"
+
   ];
 
   let index = 0;
+
   let yesSize = 18;
   let noSize = 18;
 
   function typeText(text, i = 0) {
+
     if (i < text.length) {
+
       document.getElementById("question").innerHTML += text.charAt(i);
+
       setTimeout(() => typeText(text, i + 1), 30);
+
     }
+
   }
 
   function showQuestion() {
+
     document.getElementById("question").innerHTML = "";
+
     typeText(questions[index]);
 
     let nameEl = document.querySelector(".name");
+
     let colors = ["#ff4081", "#00e5ff", "#ffd54f", "#69f0ae"];
-    nameEl.style.background = `linear-gradient(45deg, ${colors[index % colors.length]}, #fff)`;
+
+    nameEl.style.background =
+    `linear-gradient(45deg, ${colors[index % colors.length]}, #fff)`;
+
     nameEl.style.backgroundSize = "300% auto";
+
   }
 
   function startGame() {
+
     document.querySelector("button").style.display = "none";
+
     document.getElementById("buttons").style.display = "block";
-    document.getElementById("music").play().catch(()=>{});
+
     showQuestion();
+
   }
 
   function yesClick() {
+
     index++;
 
     if (index < questions.length) {
+
       yesSize = 18;
       noSize = 18;
+
       updateSize();
+
       showQuestion();
+
     } else {
+
       finalBlast();
+
     }
+
   }
 
   function moveNo() {
+
     let btn = document.getElementById("noBtn");
 
     let maxX = window.innerWidth - btn.offsetWidth;
@@ -187,52 +327,99 @@
     if (noSize < 8) noSize = 8;
 
     updateSize();
+
   }
 
   function updateSize() {
+
     document.getElementById("yesBtn").style.fontSize = yesSize + "px";
+
     document.getElementById("noBtn").style.fontSize = noSize + "px";
+
   }
 
-  // Floating hearts generator
+  /* FLOATING HEARTS */
+
   setInterval(() => {
+
     let heart = document.createElement("div");
+
     heart.className = "heart";
+
     heart.innerHTML = "❤️";
+
     heart.style.left = Math.random() * 100 + "vw";
-    heart.style.fontSize = (15 + Math.random() * 20) + "px";
+
+    heart.style.fontSize =
+    (15 + Math.random() * 20) + "px";
 
     document.body.appendChild(heart);
 
     setTimeout(() => heart.remove(), 5000);
+
   }, 300);
 
   function finalBlast() {
+
     document.body.innerHTML = `
-      <h1 style="font-size:32px;">💖 HAPPY BIRTHDAY 🐇 💖</h1>
-      <p style="font-size:22px;">
-        Once again Happy Birthday 🩷🫶🏻 Muhshina…<br><br>
-        I really miss you Rabbit 🐇 🥺💫
+
+      <div class="bg-gallery">
+
+        <img src="img (1).png">
+        <img src="img (2).png">
+        <img src="img (1).jpeg">
+        <img src="img (2).jpeg">
+        <img src="img (3).jpeg">
+        <img src="img (1).png">
+
+      </div>
+
+      <h1 style="font-size:32px; margin-top:120px;">
+      💖 HAPPY BIRTHDAY 🌙 💖
+      </h1>
+
+      <p style="font-size:22px; padding:20px;">
+
+        Once again Happy Birthday 🩷🫶🏻 Alfi…<br><br>
+
+        I really miss you Moon 🌙 🥺💫
+
       </p>
+
       <h2>❤️❤️❤️❤️❤️</h2>
+
+      <div class="footer">
+        Happy birthday sister from ABD ❤️
+      </div>
+
     `;
 
     let duration = 4 * 1000;
+
     let end = Date.now() + duration;
 
     (function frame() {
+
       confetti({
+
         particleCount: 12,
         spread: 120,
         origin: { y: 0.6 }
+
       });
 
       if (Date.now() < end) {
+
         requestAnimationFrame(frame);
+
       }
+
     })();
+
   }
+
 </script>
 
 </body>
+
 </html>
